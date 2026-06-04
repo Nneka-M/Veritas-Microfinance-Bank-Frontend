@@ -7,11 +7,23 @@ export const api = axios.create({
     headers: { "Content-Type": "application/json" },
 });
 
+function getToken(): string | null {
+    if (typeof window === "undefined") return null;
+    const direct = localStorage.getItem("token");
+    if (direct) return direct;
+    try {
+        const raw = localStorage.getItem("veritas-auth");
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            return parsed?.state?.token || null;
+        }
+    } catch { }
+    return null;
+}
+
 api.interceptors.request.use((config) => {
-    if (typeof window !== "undefined") {
-        const token = localStorage.getItem("token");
-        if (token) config.headers.Authorization = `Bearer ${token}`;
-    }
+    const token = getToken();
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
 });
 
@@ -20,6 +32,7 @@ api.interceptors.response.use(
     (err) => {
         if (err.response?.status === 401 && typeof window !== "undefined") {
             localStorage.removeItem("token");
+            localStorage.removeItem("veritas-auth");
             window.location.href = "/auth/login";
         }
         return Promise.reject(err);

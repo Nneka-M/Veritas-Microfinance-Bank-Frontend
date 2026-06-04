@@ -118,9 +118,11 @@ export const Card = ({
 export const Badge = ({
   children,
   variant = "default",
+  className = "",
 }: {
   children: React.ReactNode;
   variant?: "default" | "success" | "danger" | "warning" | "info";
+  className?: string;
 }) => {
   const variants = {
     default: "bg-surface-100 text-ink-secondary",
@@ -130,7 +132,7 @@ export const Badge = ({
     info: "bg-blue-50 text-brand-600",
   };
   return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${variants[variant]}`}>
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${variants[variant]} ${className}`}>
       {children}
     </span>
   );
@@ -182,9 +184,11 @@ export const Amount = ({
 export const Alert = ({
   children,
   variant = "danger",
+  className = "",
 }: {
   children: React.ReactNode;
   variant?: "danger" | "success" | "warning" | "info";
+  className?: string;
 }) => {
   const variants = {
     danger: "bg-red-50 border-red-100 text-danger",
@@ -193,7 +197,7 @@ export const Alert = ({
     info: "bg-blue-50 border-blue-100 text-brand-600",
   };
   return (
-    <div className={`border rounded-xl px-4 py-3 text-sm ${variants[variant]}`}>
+    <div className={`border rounded-xl px-4 py-3 text-sm ${variants[variant]} ${className}`}>
       {children}
     </div>
   );

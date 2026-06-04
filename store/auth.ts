@@ -27,7 +27,9 @@ export const useAuthStore = create<AuthState>()(
             customer: null,
 
             setAuth: (token, customer) => {
-                localStorage.setItem("token", token);
+                if (typeof window !== "undefined") {
+                    localStorage.setItem("token", token);
+                }
                 set({ token, customer });
             },
 
