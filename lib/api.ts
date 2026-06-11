@@ -68,3 +68,14 @@ export const beneficiariesApi = {
     add: (data: any) => api.post("/beneficiaries", data),
     remove: (id: string) => api.delete(`/beneficiaries/${id}`),
 };
+
+export const adminApi = {
+    login: (data: any) => api.post("/admin/login", data),
+    stats: () => api.get("/admin/stats"),
+    getCustomers: (limit = 50, offset = 0) => api.get(`/admin/customers?limit=${limit}&offset=${offset}`),
+    updateKyc: (id: string, status: string) => api.patch(`/admin/customers/${id}/kyc`, { id_type: status }),
+    toggleCustomer: (id: string) => api.patch(`/admin/customers/${id}/toggle`),
+    getAccounts: (limit = 50, offset = 0) => api.get(`/admin/accounts?limit=${limit}&offset=${offset}`),
+    getTransactions: (limit = 50, offset = 0) => api.get(`/admin/transactions?limit=${limit}&offset=${offset}`),
+    getAudit: (limit = 50, offset = 0) => api.get(`/admin/audit?limit=${limit}&offset=${offset}`),
+};
